@@ -1,14 +1,21 @@
-/* Offline support: app files are fetched fresh when online and served from cache when offline. */
-const CACHE = "athkar-v4";
+/* Offline support.
+   App code (html/js): always asks GitHub for the newest copy when online, falls back to the saved copy offline.
+   Mushaf images and icons: saved once, then served from the device. */
+const VERSION = "6";
+const CACHE = "athkar-v" + VERSION;
 const SHELL = [
   "./", "./index.html", "./manifest.webmanifest",
   "./data/athkar-default.js", "./data/mushaf-meta.js",
-  ...Array.from({ length: 23 }, (_, i) => `./mushaf/paper/${582 + i}.webp`),
-  "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png", "./icons/favicon.png"
+  "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png", "./icons/favicon.png",
+  ...Array.from({ length: 23 }, (_, i) => `./mushaf/paper/${582 + i}.webp`)
 ];
 
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  e.waitUntil(
+    caches.open(CACHE)
+      .then(c => Promise.all(SHELL.map(u => c.add(new Request(u, { cache: "reload" })).catch(() => {}))))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener("activate", e => {
@@ -18,6 +25,8 @@ self.addEventListener("activate", e => {
   );
 });
 
+const isStatic = url => /\.(webp|png|jpg|woff2?|ttf)$/i.test(url.pathname);
+
 self.addEventListener("fetch", e => {
   const req = e.request;
   if (req.method !== "GET") return;
@@ -25,23 +34,27 @@ self.addEventListener("fetch", e => {
 
   // Google Fonts: cache first
   if (url.host === "fonts.googleapis.com" || url.host === "fonts.gstatic.com") {
-    e.respondWith(
-      caches.match(req).then(hit => hit || fetch(req).then(res => {
-        const copy = res.clone();
-        caches.open(CACHE).then(c => c.put(req, copy));
-        return res;
-      }))
-    );
+    e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(res => {
+      const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); return res;
+    })));
+    return;
+  }
+  if (url.origin !== self.location.origin) return;
+
+  // Images: cache first
+  if (isStatic(url)) {
+    e.respondWith(caches.match(req, { ignoreSearch: true }).then(hit => hit || fetch(req).then(res => {
+      if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
+      return res;
+    })));
     return;
   }
 
-  // App files: network first, fall back to cache
-  if (url.origin === self.location.origin) {
-    e.respondWith(
-      fetch(req).then(res => {
-        if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
-        return res;
-      }).catch(() => caches.match(req).then(hit => hit || (req.mode === "navigate" ? caches.match("./index.html") : undefined)))
-    );
-  }
+  // App code: network first, skipping the browser's HTTP cache
+  e.respondWith(
+    fetch(req, { cache: "no-cache" }).then(res => {
+      if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
+      return res;
+    }).catch(() => caches.match(req, { ignoreSearch: true }).then(hit => hit || (req.mode === "navigate" ? caches.match("./index.html") : undefined)))
+  );
 });
