@@ -1,5 +1,5 @@
 /* Offline support: app files are fetched fresh when online and served from cache when offline. */
-const CACHE = "athkar-v2";
+const CACHE = "athkar-v3";
 const SHELL = [
   "./", "./index.html", "./manifest.webmanifest",
   "./data/athkar-default.js", "./data/mushaf-juz30.js",

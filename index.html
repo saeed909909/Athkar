@@ -166,14 +166,20 @@ hr{border:0;border-top:1px solid var(--line);margin:6px 0}
 .q-item small{color:var(--muted);font-size:12px}
 .credit{color:var(--muted);font-size:11px;text-align:center;margin:22px 0 0;opacity:.8}
 
-body.m-open{overflow:hidden;overscroll-behavior:none}
-.quran.m-mode{padding:0;height:calc(100vh - var(--head-h,118px));height:calc(100dvh - var(--head-h,118px));display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px)}
-.q-bar{flex:none;display:flex;align-items:center;gap:6px;padding-block:4px}
+html.m-open,body.m-open{overflow:hidden;overscroll-behavior:none}
+.quran.m-mode{position:fixed;inset:0;z-index:15;max-width:none;margin:0;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);background:var(--bg);display:flex;flex-direction:column}
+.quran.m-mode.dragging{transition:none}
+.quran.m-mode.closing{transition:transform .18s ease-in,opacity .18s ease-in;transform:translateY(40%);opacity:0}
+.q-bar{position:absolute;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:3;display:flex;align-items:center;gap:6px;padding:6px max(10px,env(safe-area-inset-left,0px)) 18px;background:linear-gradient(var(--bg) 62%,transparent);transition:opacity .2s}
 .q-bar h2{flex:1;min-width:0;margin:0;font-family:var(--font-thikr);font-size:20px;color:var(--brass);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pager{flex:1;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.m-nav{position:absolute;bottom:env(safe-area-inset-bottom,0px);left:0;right:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:18px 10px 8px;background:linear-gradient(transparent,var(--bg) 38%);transition:opacity .2s}
+.m-nav .icon-btn[disabled]{opacity:.3}
+.chrome-off .q-bar,.chrome-off .m-nav{opacity:0;pointer-events:none}
+.pager{flex:1;min-height:0;display:flex;touch-action:pan-x;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .pager::-webkit-scrollbar{display:none}
-.mpage{flex:0 0 100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;padding:2px 0 4px}
-.paper{position:relative;height:100%;display:flex;flex-direction:column;border-radius:10px;padding:10px 12px 4px;background:#fbf6e8;color:#1c170e;border:1px solid #d6c294;box-shadow:inset 0 0 0 4px #fbf6e8,inset 0 0 0 5px #c9ad6e}
+.mpage{flex:0 0 100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
+.mpage.tall{touch-action:pan-x pan-y}
+.paper{position:relative;min-height:100%;display:flex;flex-direction:column;padding:8px 8px 2px;background:#fbf6e8;color:#1c170e;border:1px solid #d6c294;box-shadow:inset 0 0 0 4px #fbf6e8,inset 0 0 0 5px #c9ad6e}
 .m-dark .paper{background:var(--surface);color:var(--text);border-color:var(--line);box-shadow:inset 0 0 0 4px var(--surface),inset 0 0 0 5px rgba(201,163,94,.3)}
 .lines{flex:1;min-height:0;display:flex;flex-direction:column}
 .mpage:not(.ready) .lines{visibility:hidden}
@@ -183,13 +189,12 @@ body.m-open{overflow:hidden;overscroll-behavior:none}
 .w{cursor:pointer;border-radius:4px;padding-inline:1px}
 .w.mark{background:rgba(201,163,94,.32)}
 .mhead{flex:1 1 0;min-height:0;display:flex;align-items:center;justify-content:center;margin:2px 0;border:1.5px solid #c9ad6e;border-radius:8px;background:rgba(201,163,94,.12);color:inherit}
-.mhead span{font-family:"Surah Names";font-size:calc(var(--fs,20px) * 2.3);line-height:1}
+.mhead span{font-family:"Surah Names";font-size:calc(var(--fs,20px) * 2.25);line-height:1;transform:translateY(.12em)}
 .mbsm{font-family:"QPC BSML";justify-content:center}
 .mnum{flex:none;text-align:center;font-size:13px;color:#8a7a55;font-variant-numeric:tabular-nums;padding-top:2px}
 .m-dark .mnum{color:var(--muted)}
-.m-nav{flex:none;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-block:2px 6px}
 .m-nav .icon-btn[disabled]{opacity:.3}
-.m-nav small{color:var(--muted);font-size:12px;text-align:center}
+.m-nav small{color:var(--muted);font-size:12px;text-align:center;line-height:1.6}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -539,6 +544,8 @@ function setHeadH(){document.documentElement.style.setProperty("--head-h",$("hea
 function renderQuran(){
   const v=$("quranView");
   document.body.classList.toggle("m-open",qOpen!=null);
+  document.documentElement.classList.toggle("m-open",qOpen!=null);
+  if(qOpen==null){v.classList.remove("chrome-off","closing","dragging");v.style.transform="";v.style.opacity=""}
   v.classList.toggle("m-mode",qOpen!=null);
   v.classList.toggle("m-dark",mDark);
   if(!MUS.pages.length){v.innerHTML=`<div class="empty"><p>تعذّر تحميل المصحف</p></div>`;return}
@@ -561,12 +568,14 @@ function renderQuran(){
     <div class="pager" id="pager" dir="rtl">${MUS.pages.map(pageHTML).join("")}</div>
     <div class="m-nav">
       <button class="icon-btn" type="button" data-q="prev" aria-label="الصفحة السابقة">${ICON.back}</button>
-      <small>اسحب لتقليب الصفحات · اضغط على آية لوضع علامة</small>
+      <small>اسحب يميناً ويساراً للتقليب · للأسفل للرجوع<br>اضغط مطولاً على آية لوضع علامة</small>
       <button class="icon-btn" type="button" data-q="next" aria-label="الصفحة التالية">${LEFT}</button>
     </div>`;
   const pager=$("pager");
   pager.addEventListener("scroll",onPagerScroll,{passive:true});
-  requestAnimationFrame(()=>{goPage(qOpen,false);onPagerSettled()});
+  bindPagerGestures(pager);
+  showChrome(true);
+  requestAnimationFrame(()=>{refitAll();goPage(qOpen,false);onPagerSettled()});
 }
 function pageHTML(pg){
   const lines=pg.l.map(l=>{
@@ -588,6 +597,7 @@ function loadPageFont(p){
 }
 function fitPage(el,p){
   const box=el.querySelector(".lines");if(!box)return;
+  box.style.flex="";box.style.height="";el.classList.remove("tall");
   const W=box.clientWidth,H=box.clientHeight;if(!W||!H)return;
   const pg=MUS.pages[p-FIRST];
   const m=document.createElement("span");
@@ -596,12 +606,22 @@ function fitPage(el,p){
   let maxW=1;
   for(const l of pg.l)if(l.t==="t"){m.textContent=l.w.map(w=>w[0]).join(" ");maxW=Math.max(maxW,m.getBoundingClientRect().width)}
   m.remove();
-  const fs=Math.min(100*W/maxW*0.97,H/15/1.55);
+  const fsW=100*W/maxW*0.97,fsH=H/15/1.55;
+  let fs=Math.min(fsW,fsH);
+  if(fsH<fsW*0.8){ /* wide screen: use the full width and scroll down the page */
+    fs=fsW;box.style.flex="none";box.style.height=(15*fs*1.75).toFixed(0)+"px";el.classList.add("tall");
+  }
   el.style.setProperty("--fs",fs.toFixed(2)+"px");
 }
-function refitAll(){document.querySelectorAll(".mpage.ready").forEach(el=>fitPage(el,+el.dataset.p))}
+function refitAll(){document.querySelectorAll(".mpage").forEach(el=>{if(fontState[+el.dataset.p]&&el.classList.contains("ready"))fitPage(el,+el.dataset.p)})}
 
-function curIndex(){const pg=$("pager");return pg?Math.round(Math.abs(pg.scrollLeft)/pg.clientWidth):0}
+function curIndex(){
+  const pg=$("pager");if(!pg)return 0;
+  const r=pg.getBoundingClientRect(),cx=r.left+r.width/2;
+  let best=0,bd=1e9;
+  for(let i=0;i<pg.children.length;i++){const c=pg.children[i].getBoundingClientRect(),d=Math.abs(c.left+c.width/2-cx);if(d<bd){bd=d;best=i}}
+  return best;
+}
 function goPage(i,smooth){
   const pg=$("pager");if(!pg)return;
   i=Math.max(0,Math.min(MUS.pages.length-1,i));
@@ -609,7 +629,7 @@ function goPage(i,smooth){
   pg.scrollTo({left:(rtl?-1:1)*i*pg.clientWidth,behavior:smooth?"smooth":"instant"});
 }
 let pagerT=null;
-function onPagerScroll(){clearTimeout(pagerT);pagerT=setTimeout(onPagerSettled,90)}
+function onPagerScroll(){clearTimeout(pagerT);pagerT=setTimeout(onPagerSettled,140)}
 function onPagerSettled(){
   if(qOpen==null||!$("pager"))return;
   const i=curIndex();qOpen=i;
@@ -623,8 +643,9 @@ function onPagerSettled(){
 function openPage(p){
   const i=Math.max(0,Math.min(MUS.pages.length-1,p-FIRST));
   const fromList=qOpen==null;
-  qOpen=i;window.scrollTo({top:0});setHeadH();renderQuran();
-  if(fromList)pushNav("mushaf");
+  qOpen=i;window.scrollTo({top:0});setHeadH();
+  if(fromList){enterFull();pushNav("mushaf")}
+  renderQuran();
 }
 $("quranView").addEventListener("click",e=>{
   const pBtn=e.target.closest("[data-page]");
@@ -634,23 +655,91 @@ $("quranView").addEventListener("click",e=>{
     const a=q.dataset.q;
     if(a==="list"){navBack();return}
     if(a==="theme"){mDark=!mDark;ls.set("athkar.mushafDark",mDark);$("quranView").classList.toggle("m-dark",mDark);q.innerHTML=mDark?SUN:MOON;return}
-    if(a==="prev"){goPage(curIndex()-1,true);return}
-    if(a==="next"){goPage(curIndex()+1,true);return}
+    if(a==="prev"){goPage(curIndex()-1,true);showChrome(true);return}
+    if(a==="next"){goPage(curIndex()+1,true);showChrome(true);return}
   }
-  const w=e.target.closest(".w");
-  if(w&&qOpen!=null){
-    const k=w.dataset.k,p=+w.closest(".mpage").dataset.p;
-    const same=qMark&&qMark.k===k;
-    document.querySelectorAll(".w.mark").forEach(x=>x.classList.remove("mark"));
-    if(same)qMark=null;
-    else{qMark={k,p};document.querySelectorAll(`.w[data-k="${k}"]`).forEach(x=>x.classList.add("mark"))}
-    ls.set("athkar.quranMark",qMark);
-    try{navigator.vibrate&&navigator.vibrate(10)}catch(err){}
+  if(qOpen!=null&&e.target.closest(".pager")){
+    if(Date.now()-lastTouch<900)return;            /* touch taps are handled by the gesture code */
+    const w=e.target.closest(".w");
+    if(w)toggleMark(w);else toggleChrome();
   }
 });
+function toggleMark(w){
+  const k=w.dataset.k,p=+w.closest(".mpage").dataset.p;
+  const same=qMark&&qMark.k===k;
+  document.querySelectorAll(".w.mark").forEach(x=>x.classList.remove("mark"));
+  if(same)qMark=null;
+  else{qMark={k,p};document.querySelectorAll(`.w[data-k="${k}"]`).forEach(x=>x.classList.add("mark"))}
+  ls.set("athkar.quranMark",qMark);
+  try{navigator.vibrate&&navigator.vibrate(same?10:[15,40,15])}catch(err){}
+}
+let chromeT=null;
+function showChrome(autoHide){
+  const v=$("quranView");v.classList.remove("chrome-off");
+  clearTimeout(chromeT);if(autoHide)chromeT=setTimeout(()=>v.classList.add("chrome-off"),2600);
+}
+function toggleChrome(){const v=$("quranView");if(v.classList.contains("chrome-off"))showChrome(true);else{clearTimeout(chromeT);v.classList.add("chrome-off")}}
+
+/* full screen while reading (Android/desktop; iPhone keeps the status bar) */
+function enterFull(){
+  const d=document.documentElement;
+  try{const r=d.requestFullscreen?d.requestFullscreen({navigationUI:"hide"}):d.webkitRequestFullscreen?d.webkitRequestFullscreen():null;if(r&&r.catch)r.catch(()=>{})}catch(e){}
+}
+function exitFull(){
+  try{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(()=>{});else if(document.webkitFullscreenElement&&document.webkitExitFullscreen)document.webkitExitFullscreen()}catch(e){}
+}
+function closeMushaf(){
+  exitFull();
+  const v=$("quranView");v.classList.remove("closing","dragging");v.style.transform="";v.style.opacity="";
+  qOpen=null;renderQuran();window.scrollTo({top:0});setHeadH();
+}
+
+/* touch: tap = show/hide buttons, long-press an ayah = mark it, pull down = back to the list */
+let lastTouch=0;
+function bindPagerGestures(pager){
+  const v=$("quranView");
+  let sx=0,sy=0,t0=0,mode=null,lp=null,lpDone=false,dy=0,page=null;
+  pager.addEventListener("contextmenu",e=>e.preventDefault());
+  pager.addEventListener("touchstart",e=>{
+    lastTouch=Date.now();
+    if(e.touches.length!==1){mode="multi";clearTimeout(lp);return}
+    const t=e.touches[0];sx=t.clientX;sy=t.clientY;t0=Date.now();mode=null;lpDone=false;dy=0;
+    page=e.target.closest(".mpage");
+    const w=e.target.closest(".w");
+    clearTimeout(lp);
+    if(w)lp=setTimeout(()=>{if(mode==null){lpDone=true;toggleMark(w)}},480);
+  },{passive:true});
+  pager.addEventListener("touchmove",e=>{
+    if(mode==="multi"||e.touches.length!==1)return;
+    const t=e.touches[0],dx=t.clientX-sx;dy=t.clientY-sy;
+    if(mode==null&&(Math.abs(dx)>8||Math.abs(dy)>8)){
+      clearTimeout(lp);
+      const atTop=!page||page.scrollTop<=0;
+      mode=(dy>0&&Math.abs(dy)>Math.abs(dx)*1.3&&atTop)?"down":"other";
+      if(mode==="down")v.classList.add("dragging");
+    }
+    if(mode==="down"){
+      if(e.cancelable)e.preventDefault();
+      const d=Math.max(0,dy);
+      v.style.transform=`translateY(${(d*0.55).toFixed(0)}px)`;v.style.opacity=String(Math.max(.35,1-d/600));
+    }
+  },{passive:false});
+  pager.addEventListener("touchend",()=>{
+    lastTouch=Date.now();clearTimeout(lp);
+    if(mode==="down"){
+      v.classList.remove("dragging");
+      if(dy>110){v.classList.add("closing");setTimeout(navBack,170)}
+      else{v.style.transform="";v.style.opacity=""}
+    }else if(mode==null&&!lpDone&&Date.now()-t0<400){toggleChrome()}
+    mode=null;
+  });
+  pager.addEventListener("touchcancel",()=>{clearTimeout(lp);mode=null;v.classList.remove("dragging");v.style.transform="";v.style.opacity=""});
+}
+document.addEventListener("fullscreenchange",()=>{if(qOpen!=null)setTimeout(()=>{const i=qOpen;refitAll();goPage(i,false)},120)});
+
 document.addEventListener("keydown",e=>{
   if(active!=="quran"||qOpen==null||!scrim.hidden)return;
-  if(e.key==="ArrowLeft"){goPage(curIndex()+1,true)}else if(e.key==="ArrowRight"){goPage(curIndex()-1,true)}
+  if(e.key==="ArrowLeft"){goPage(curIndex()+1,true)}else if(e.key==="ArrowRight"){goPage(curIndex()-1,true)}else if(e.key==="Escape"){navBack()}
 });
 let resizeT=null;
 window.addEventListener("resize",()=>{clearTimeout(resizeT);resizeT=setTimeout(()=>{setHeadH();if(qOpen!=null){const i=qOpen;refitAll();goPage(i,false)}},150)});
@@ -686,7 +775,7 @@ function navBack(){if(history.state&&history.state.v)history.back();else doBack(
 function doBack(){
   if(!scrim.hidden){closeSheet();return}
   if(!$("settings").hidden){showSettings(false,true);return}
-  if(active==="quran"&&qOpen!=null){qOpen=null;renderQuran();window.scrollTo({top:0})}
+  if(active==="quran"&&qOpen!=null){closeMushaf()}
 }
 window.addEventListener("popstate",doBack);
 
