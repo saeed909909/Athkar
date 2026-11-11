@@ -13,9 +13,15 @@ A personal athkar counter: أذكار الاستيقاظ، الصباح، الم
 |---|---|
 | `index.html` | The whole app |
 | `data/athkar-default.js` | Default athkar list (your backup) |
-| `data/juz-amma.js` | Surahs 78–114 |
+| `data/mushaf-juz30.js` | Juz Amma page layout: Madinah mushaf pages 582–604, 15 lines each |
+| `fonts/qpc2/` | King Fahd Complex QPC V2 page fonts for those pages, plus the basmala font |
+| `fonts/surahs.ttf` | Surah-name calligraphy font |
 | `sw.js`, `manifest.webmanifest`, `icons/` | Offline support and home-screen icon |
 
-## Quran text
+## Juz Amma
 
-Quran text: **Tanzil Quran Text (Uthmani)**, Copyright (C) 2007-2021 [Tanzil Project](https://tanzil.net), licensed under Creative Commons Attribution 3.0. The text is included verbatim. The basmala at the start of each surah is shown as a separate heading above the first ayah.
+Juz Amma is shown exactly as the printed Madinah mushaf (Hafs): same pages, same 15 lines per page, same line breaks. Swipe to turn pages; tap an ayah to bookmark it.
+
+- Glyph fonts: QPC V2, © King Fahd Glorious Quran Printing Complex (all rights reserved; free for non-commercial use), as used by quran.com.
+- Page and line layout: quran.com data, via [zonetecde/mushaf-layout](https://github.com/zonetecde/mushaf-layout) (ISC).
+- Surah-name font: "Surah Name V4" by Ahmed Alaa Elgharib.
