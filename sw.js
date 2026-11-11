@@ -1,7 +1,7 @@
 /* Offline support.
    App code (html/js): always asks GitHub for the newest copy when online, falls back to the saved copy offline.
    Mushaf images and icons: saved once, then served from the device. */
-const VERSION = "6";
+const VERSION = "7";
 const CACHE = "athkar-v" + VERSION;
 const SHELL = [
   "./", "./index.html", "./manifest.webmanifest",
