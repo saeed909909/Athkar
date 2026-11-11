@@ -1,0 +1,17 @@
+{
+  "name": "أذكاري",
+  "short_name": "أذكاري",
+  "description": "أذكار الاستيقاظ والصباح والمساء والنوم مع عدّاد، وجزء عمّ",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e0e0f",
+  "theme_color": "#0e0e0f",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
