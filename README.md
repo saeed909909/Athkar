@@ -13,15 +13,14 @@ A personal athkar counter: أذكار الاستيقاظ، الصباح، الم
 |---|---|
 | `index.html` | The whole app |
 | `data/athkar-default.js` | Default athkar list (your backup) |
-| `data/mushaf-juz30.js` | Juz Amma page layout: Madinah mushaf pages 582–604, 15 lines each |
-| `fonts/qpc2/` | King Fahd Complex QPC V2 page fonts for those pages, plus the basmala font |
-| `fonts/surahs.ttf` | Surah-name calligraphy font |
+| `data/mushaf-meta.js` | Surah list and page index for Juz Amma |
+| `mushaf/paper/*.webp`, `mushaf/dark/*.webp` | Madinah mushaf pages 582–604 as images (cream and dark) |
 | `sw.js`, `manifest.webmanifest`, `icons/` | Offline support and home-screen icon |
 
 ## Juz Amma
 
-Juz Amma is shown exactly as the printed Madinah mushaf (Hafs): same pages, same 15 lines per page, same line breaks. Swipe to turn pages; tap an ayah to bookmark it.
+Juz Amma is shown as the printed Madinah mushaf (Hafs): same pages, same 15 lines per page, same line breaks. The pages are pre-rendered images, so they show instantly and work offline. Swipe sideways to turn pages, pull down to go back, tap to show the buttons.
 
-- Glyph fonts: QPC V2, © King Fahd Glorious Quran Printing Complex (all rights reserved; free for non-commercial use), as used by quran.com.
+- Rendered with the QPC V2 fonts, © King Fahd Glorious Quran Printing Complex (free for non-commercial use), as used by quran.com.
 - Page and line layout: quran.com data, via [zonetecde/mushaf-layout](https://github.com/zonetecde/mushaf-layout) (ISC).
 - Surah-name font: "Surah Name V4" by Ahmed Alaa Elgharib.

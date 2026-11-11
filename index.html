@@ -148,9 +148,7 @@ hr{border:0;border-top:1px solid var(--line);margin:6px 0}
 .note.bad{color:var(--danger)}
 .file-in{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 
-/* Juz Amma: surah index + Madinah mushaf pages */
-@font-face{font-family:"QPC BSML";src:url(fonts/qpc2/bsml.ttf) format("truetype");font-display:block}
-@font-face{font-family:"Surah Names";src:url(fonts/surahs.ttf) format("truetype");font-display:block}
+/* Juz Amma: surah index + Madinah mushaf page images */
 .quran{padding-block:12px 80px}
 .q-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-block:4px 12px}
 .q-head h2{margin:0;font-family:var(--font-display);font-weight:500;font-size:22px;color:var(--brass)}
@@ -167,34 +165,23 @@ hr{border:0;border-top:1px solid var(--line);margin:6px 0}
 .credit{color:var(--muted);font-size:11px;text-align:center;margin:22px 0 0;opacity:.8}
 
 html.m-open,body.m-open{overflow:hidden;overscroll-behavior:none}
-.quran.m-mode{position:fixed;inset:0;z-index:15;max-width:none;margin:0;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);background:var(--bg);display:flex;flex-direction:column}
+.quran.m-mode{position:fixed;inset:0;z-index:15;max-width:none;margin:0;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);background:#fbf6e8;display:flex;flex-direction:column}
+.quran.m-mode.m-dark{background:#18181a}
 .quran.m-mode.dragging{transition:none}
 .quran.m-mode.closing{transition:transform .18s ease-in,opacity .18s ease-in;transform:translateY(40%);opacity:0}
-.q-bar{position:absolute;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:3;display:flex;align-items:center;gap:6px;padding:6px max(10px,env(safe-area-inset-left,0px)) 18px;background:linear-gradient(var(--bg) 62%,transparent);transition:opacity .2s}
+.q-bar{position:absolute;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:3;display:flex;align-items:center;gap:4px;padding:6px max(10px,env(safe-area-inset-left,0px)) 6px;background:rgba(14,14,15,.92);transition:opacity .2s}
 .q-bar h2{flex:1;min-width:0;margin:0;font-family:var(--font-thikr);font-size:20px;color:var(--brass);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.m-nav{position:absolute;bottom:env(safe-area-inset-bottom,0px);left:0;right:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:18px 10px 8px;background:linear-gradient(transparent,var(--bg) 38%);transition:opacity .2s}
-.m-nav .icon-btn[disabled]{opacity:.3}
-.chrome-off .q-bar,.chrome-off .m-nav{opacity:0;pointer-events:none}
-.pager{flex:1;min-height:0;display:flex;touch-action:pan-x;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.pager::-webkit-scrollbar{display:none}
-.mpage{flex:0 0 100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
-.mpage.tall{touch-action:pan-x pan-y}
-.paper{position:relative;min-height:100%;display:flex;flex-direction:column;padding:8px 8px 2px;background:#fbf6e8;color:#1c170e;border:1px solid #d6c294;box-shadow:inset 0 0 0 4px #fbf6e8,inset 0 0 0 5px #c9ad6e}
-.m-dark .paper{background:var(--surface);color:var(--text);border-color:var(--line);box-shadow:inset 0 0 0 4px var(--surface),inset 0 0 0 5px rgba(201,163,94,.3)}
-.lines{flex:1;min-height:0;display:flex;flex-direction:column}
-.mpage:not(.ready) .lines{visibility:hidden}
-.mpage:not(.ready) .paper::after{content:"جارٍ تحميل الصفحة…";position:absolute;inset:0;display:grid;place-items:center;color:#9a8a66;font-size:14px}
-.mline{flex:1 1 0;min-height:0;display:flex;align-items:center;justify-content:space-between;white-space:nowrap;font-size:var(--fs,20px);line-height:1}
-.mline.center{justify-content:center}
-.w{cursor:pointer;border-radius:4px;padding-inline:1px}
-.w.mark{background:rgba(201,163,94,.32)}
-.mhead{flex:1 1 0;min-height:0;display:flex;align-items:center;justify-content:center;margin:2px 0;border:1.5px solid #c9ad6e;border-radius:8px;background:rgba(201,163,94,.12);color:inherit}
-.mhead span{font-family:"Surah Names";font-size:calc(var(--fs,20px) * 2.25);line-height:1;transform:translateY(.12em)}
-.mbsm{font-family:"QPC BSML";justify-content:center}
-.mnum{flex:none;text-align:center;font-size:13px;color:#8a7a55;font-variant-numeric:tabular-nums;padding-top:2px}
-.m-dark .mnum{color:var(--muted)}
+.q-bar .on{color:var(--brass)}
+.m-nav{position:absolute;bottom:env(safe-area-inset-bottom,0px);left:0;right:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 10px;background:rgba(14,14,15,.92);transition:opacity .2s}
 .m-nav .icon-btn[disabled]{opacity:.3}
 .m-nav small{color:var(--muted);font-size:12px;text-align:center;line-height:1.6}
+.chrome-off .q-bar,.chrome-off .m-nav{opacity:0;pointer-events:none}
+.viewer{flex:1;min-height:0;position:relative;overflow:hidden;touch-action:pan-y;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.track{position:absolute;inset:0;will-change:transform}
+.track.anim{transition:transform .28s cubic-bezier(.2,.75,.25,1)}
+.slide{position:absolute;inset:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.slide img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+@media (orientation:landscape){.slide img{height:auto}}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -282,7 +269,7 @@ html.m-open,body.m-open{overflow:hidden;overscroll-behavior:none}
 <div class="scrim" id="scrim" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 
 <script src="data/athkar-default.js"></script>
-<script src="data/mushaf-juz30.js"></script>
+<script src="data/mushaf-meta.js"></script>
 <script>
 (function(){
 "use strict";
@@ -526,35 +513,35 @@ function openActions(c,confirmDelete){
   };
 }
 
-/* ---------- Juz Amma (Madinah mushaf pages) ---------- */
-const MUS=window.MUSHAF||{pages:[],surahs:[]};
-const FIRST=MUS.pages.length?MUS.pages[0].p:582;
-let qOpen=null;                                   /* index of the page being shown, or null for the surah list */
-let qMark=ls.get("athkar.quranMark");             /* {k:"78:5",p:583}: the ayah you marked */
-if(qMark&&!qMark.k)qMark=null;
-let qLast=ls.get("athkar.quranPage")||null;       /* last page you looked at */
+/* ---------- Juz Amma (Madinah mushaf page images) ---------- */
+const MUS=window.MUSHAF_META||{first:582,last:604,surahs:[],pageSurah:{}};
+const FIRST=MUS.first,NP=MUS.last-MUS.first+1;
+let qOpen=null;                                  /* index of the page on screen (0 = page 582), or null for the surah list */
+let qMark=ls.get("athkar.quranBookmark");        /* bookmarked page number */
+let qLast=ls.get("athkar.quranPage")||null;      /* last page looked at */
 let mDark=!!ls.get("athkar.mushafDark");
 const surahByN=n=>MUS.surahs.find(s=>s.n===n);
-const pageSurah=pg=>{for(const l of pg.l)if(l.t==="t")return surahByN(+l.w[0][1].split(":")[0]);return null};
+const pageSurah=p=>surahByN(MUS.pageSurah[p]);
+const imgSrc=i=>`mushaf/${mDark?"dark":"paper"}/${FIRST+i}.webp`;
 const LEFT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
 const MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>';
 const SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const BOOK=f=>`<svg viewBox="0 0 24 24" fill="${f?"currentColor":"none"}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>`;
 function setHeadH(){document.documentElement.style.setProperty("--head-h",$("head").offsetHeight+"px")}
 
 function renderQuran(){
   const v=$("quranView");
-  document.body.classList.toggle("m-open",qOpen!=null);
-  document.documentElement.classList.toggle("m-open",qOpen!=null);
-  if(qOpen==null){v.classList.remove("chrome-off","closing","dragging");v.style.transform="";v.style.opacity=""}
-  v.classList.toggle("m-mode",qOpen!=null);
+  const open=qOpen!=null;
+  document.body.classList.toggle("m-open",open);
+  document.documentElement.classList.toggle("m-open",open);
+  v.classList.toggle("m-mode",open);
   v.classList.toggle("m-dark",mDark);
-  if(!MUS.pages.length){v.innerHTML=`<div class="empty"><p>تعذّر تحميل المصحف</p></div>`;return}
-  if(qOpen==null){
-    const cp=qMark?qMark.p:qLast;
-    const cpg=cp&&MUS.pages[cp-FIRST],cs=cpg&&pageSurah(cpg);
+  if(!open){
+    v.classList.remove("chrome-off","closing","dragging");v.style.transform="";v.style.opacity="";
+    const cp=qMark||qLast,cs=cp&&pageSurah(cp);
     v.innerHTML=`
-      <div class="q-head"><h2>جزء عمّ</h2><span>${arNum(MUS.surahs.length)} سورة · الصفحات ${arNum(FIRST)}–${arNum(FIRST+MUS.pages.length-1)}</span></div>
-      ${cs?`<button class="q-continue" type="button" data-page="${cp}"><span>متابعة القراءة: سورة ${cs.name}<br><small>صفحة ${arNum(cp)}${qMark?" · علامتك عند الآية "+arNum(+qMark.k.split(":")[1]):""}</small></span>${LEFT}</button>`:""}
+      <div class="q-head"><h2>جزء عمّ</h2><span>${arNum(MUS.surahs.length)} سورة · الصفحات ${arNum(FIRST)}–${arNum(MUS.last)}</span></div>
+      ${cs?`<button class="q-continue" type="button" data-page="${cp}"><span>${qMark?"علامتك":"متابعة القراءة"}: سورة ${cs.name}<br><small>صفحة ${arNum(cp)}</small></span>${LEFT}</button>`:""}
       <div class="q-list">${MUS.surahs.map(s=>`<button class="q-item" type="button" data-page="${s.page}"><span class="num">${arNum(s.n)}</span><span><b>${s.name}</b><small>${arNum(s.ayat)} آية · ص ${arNum(s.page)}</small></span></button>`).join("")}</div>
       <p class="credit">مصحف المدينة المنورة · خطوط مجمع الملك فهد لطباعة المصحف الشريف</p>`;
     return;
@@ -563,124 +550,59 @@ function renderQuran(){
     <div class="q-bar">
       <button class="icon-btn" type="button" data-q="list" aria-label="رجوع إلى الفهرس">${ICON.back}</button>
       <h2 id="mTitle"></h2>
+      <button class="icon-btn" type="button" data-q="mark" id="mMark" aria-label="علامة على هذه الصفحة">${BOOK(false)}</button>
       <button class="icon-btn" type="button" data-q="theme" aria-label="تغيير لون الصفحة">${mDark?SUN:MOON}</button>
     </div>
-    <div class="pager" id="pager" dir="rtl">${MUS.pages.map(pageHTML).join("")}</div>
+    <div class="viewer" id="viewer"><div class="track" id="track">${Array.from({length:NP},(_,i)=>`<div class="slide" style="transform:translateX(${-i*100}%)"><img alt="صفحة ${arNum(FIRST+i)}" draggable="false" decoding="async"></div>`).join("")}</div></div>
     <div class="m-nav">
       <button class="icon-btn" type="button" data-q="prev" aria-label="الصفحة السابقة">${ICON.back}</button>
-      <small>اسحب يميناً ويساراً للتقليب · للأسفل للرجوع<br>اضغط مطولاً على آية لوضع علامة</small>
+      <small>اسحب يميناً ويساراً للتقليب · للأسفل للرجوع</small>
       <button class="icon-btn" type="button" data-q="next" aria-label="الصفحة التالية">${LEFT}</button>
     </div>`;
-  const pager=$("pager");
-  pager.addEventListener("scroll",onPagerScroll,{passive:true});
-  bindPagerGestures(pager);
+  bindViewer($("viewer"));
+  goPage(qOpen,false);
   showChrome(true);
-  requestAnimationFrame(()=>{refitAll();goPage(qOpen,false);onPagerSettled()});
-}
-function pageHTML(pg){
-  const lines=pg.l.map(l=>{
-    if(l.t==="s")return `<div class="mhead" aria-label="سورة ${esc(l.name)}"><span dir="ltr">${String(l.s).padStart(3,"0")}</span></div>`;
-    if(l.t==="b")return `<div class="mline mbsm" aria-label="بسم الله الرحمن الرحيم">${esc(l.g)}</div>`;
-    return `<div class="mline" aria-label="${esc(l.x)}">${l.w.map(w=>`<span class="w${qMark&&qMark.k===w[1]?" mark":""}" data-k="${w[1]}">${esc(w[0])}</span>`).join("")}</div>`;
-  }).join("");
-  return `<section class="mpage" data-p="${pg.p}"><div class="paper"><div class="lines" style="font-family:qpc${pg.p}">${lines}</div><div class="mnum">${arNum(pg.p)}</div></div></section>`;
 }
 
-/* page fonts load only when a page is near the screen */
-const fontState={};
-function loadPageFont(p){
-  if(fontState[p])return fontState[p];
-  const ff=new FontFace("qpc"+p,`url(fonts/qpc2/p${p}.woff2)`,{display:"block"});
-  fontState[p]=ff.load().then(f=>{document.fonts.add(f);const el=document.querySelector(`.mpage[data-p="${p}"]`);if(el){fitPage(el,p);el.classList.add("ready")}})
-    .catch(()=>{delete fontState[p]});
-  return fontState[p];
-}
-function fitPage(el,p){
-  const box=el.querySelector(".lines");if(!box)return;
-  box.style.flex="";box.style.height="";el.classList.remove("tall");
-  const W=box.clientWidth,H=box.clientHeight;if(!W||!H)return;
-  const pg=MUS.pages[p-FIRST];
-  const m=document.createElement("span");
-  m.style.cssText=`position:absolute;visibility:hidden;white-space:nowrap;font-family:qpc${p};font-size:100px;left:-9999px;top:0`;
-  document.body.appendChild(m);
-  let maxW=1;
-  for(const l of pg.l)if(l.t==="t"){m.textContent=l.w.map(w=>w[0]).join(" ");maxW=Math.max(maxW,m.getBoundingClientRect().width)}
-  m.remove();
-  const fsW=100*W/maxW*0.97,fsH=H/15/1.55;
-  let fs=Math.min(fsW,fsH);
-  if(fsH<fsW*0.8){ /* wide screen: use the full width and scroll down the page */
-    fs=fsW;box.style.flex="none";box.style.height=(15*fs*1.75).toFixed(0)+"px";el.classList.add("tall");
+/* only the pages near the one on screen hold an image, to keep memory low */
+function loadNear(i){
+  const slides=$("track").children;
+  for(let k=0;k<slides.length;k++){
+    const img=slides[k].firstElementChild,want=Math.abs(k-i)<=2;
+    if(want){const s=imgSrc(k);if(img.getAttribute("src")!==s)img.src=s}
+    else if(Math.abs(k-i)>4&&img.hasAttribute("src"))img.removeAttribute("src");
   }
-  el.style.setProperty("--fs",fs.toFixed(2)+"px");
 }
-function refitAll(){document.querySelectorAll(".mpage").forEach(el=>{if(fontState[+el.dataset.p]&&el.classList.contains("ready"))fitPage(el,+el.dataset.p)})}
-
-function curIndex(){
-  const pg=$("pager");if(!pg)return 0;
-  const r=pg.getBoundingClientRect(),cx=r.left+r.width/2;
-  let best=0,bd=1e9;
-  for(let i=0;i<pg.children.length;i++){const c=pg.children[i].getBoundingClientRect(),d=Math.abs(c.left+c.width/2-cx);if(d<bd){bd=d;best=i}}
-  return best;
-}
-function goPage(i,smooth){
-  const pg=$("pager");if(!pg)return;
-  i=Math.max(0,Math.min(MUS.pages.length-1,i));
-  const rtl=getComputedStyle(pg).direction==="rtl";
-  pg.scrollTo({left:(rtl?-1:1)*i*pg.clientWidth,behavior:smooth?"smooth":"instant"});
-}
-let pagerT=null;
-function onPagerScroll(){clearTimeout(pagerT);pagerT=setTimeout(onPagerSettled,140)}
-function onPagerSettled(){
-  if(qOpen==null||!$("pager"))return;
-  const i=curIndex();qOpen=i;
-  const pg=MUS.pages[i],s=pageSurah(pg);
-  $("mTitle").textContent=(s?"سورة "+s.name+" · ":"")+"ص "+arNum(pg.p);
-  qLast=pg.p;ls.set("athkar.quranPage",qLast);
-  for(const k of [i,i-1,i+1,i+2])if(MUS.pages[k])loadPageFont(MUS.pages[k].p);
+function goPage(i,anim){
+  const tr=$("track");if(!tr)return;
+  i=Math.max(0,Math.min(NP-1,i));
+  const changed=i!==qOpen;
+  qOpen=i;
+  tr.classList.toggle("anim",!!anim);
+  tr.style.transform=`translateX(${i*100}%)`;
+  loadNear(i);
+  if(changed){const sl=tr.children[i];if(sl)sl.scrollTop=0}
+  const p=FIRST+i,s=pageSurah(p);
+  $("mTitle").textContent=(s?"سورة "+s.name+" · ":"")+"ص "+arNum(p);
+  $("mMark").innerHTML=BOOK(qMark===p);$("mMark").classList.toggle("on",qMark===p);
+  qLast=p;ls.set("athkar.quranPage",p);
   const nav=document.querySelector(".m-nav");
-  if(nav){nav.querySelector('[data-q="prev"]').disabled=i===0;nav.querySelector('[data-q="next"]').disabled=i===MUS.pages.length-1}
+  if(nav){nav.querySelector('[data-q="prev"]').disabled=i===0;nav.querySelector('[data-q="next"]').disabled=i===NP-1}
 }
 function openPage(p){
-  const i=Math.max(0,Math.min(MUS.pages.length-1,p-FIRST));
   const fromList=qOpen==null;
-  qOpen=i;window.scrollTo({top:0});setHeadH();
+  qOpen=Math.max(0,Math.min(NP-1,p-FIRST));
+  window.scrollTo({top:0});
   if(fromList){enterFull();pushNav("mushaf")}
   renderQuran();
 }
-$("quranView").addEventListener("click",e=>{
-  const pBtn=e.target.closest("[data-page]");
-  if(pBtn){openPage(+pBtn.dataset.page);return}
-  const q=e.target.closest("[data-q]");
-  if(q){
-    const a=q.dataset.q;
-    if(a==="list"){navBack();return}
-    if(a==="theme"){mDark=!mDark;ls.set("athkar.mushafDark",mDark);$("quranView").classList.toggle("m-dark",mDark);q.innerHTML=mDark?SUN:MOON;return}
-    if(a==="prev"){goPage(curIndex()-1,true);showChrome(true);return}
-    if(a==="next"){goPage(curIndex()+1,true);showChrome(true);return}
-  }
-  if(qOpen!=null&&e.target.closest(".pager")){
-    if(Date.now()-lastTouch<900)return;            /* touch taps are handled by the gesture code */
-    const w=e.target.closest(".w");
-    if(w)toggleMark(w);else toggleChrome();
-  }
-});
-function toggleMark(w){
-  const k=w.dataset.k,p=+w.closest(".mpage").dataset.p;
-  const same=qMark&&qMark.k===k;
-  document.querySelectorAll(".w.mark").forEach(x=>x.classList.remove("mark"));
-  if(same)qMark=null;
-  else{qMark={k,p};document.querySelectorAll(`.w[data-k="${k}"]`).forEach(x=>x.classList.add("mark"))}
-  ls.set("athkar.quranMark",qMark);
-  try{navigator.vibrate&&navigator.vibrate(same?10:[15,40,15])}catch(err){}
-}
+
 let chromeT=null;
 function showChrome(autoHide){
   const v=$("quranView");v.classList.remove("chrome-off");
   clearTimeout(chromeT);if(autoHide)chromeT=setTimeout(()=>v.classList.add("chrome-off"),2600);
 }
 function toggleChrome(){const v=$("quranView");if(v.classList.contains("chrome-off"))showChrome(true);else{clearTimeout(chromeT);v.classList.add("chrome-off")}}
-
-/* full screen while reading (Android/desktop; iPhone keeps the status bar) */
 function enterFull(){
   const d=document.documentElement;
   try{const r=d.requestFullscreen?d.requestFullscreen({navigationUI:"hide"}):d.webkitRequestFullscreen?d.webkitRequestFullscreen():null;if(r&&r.catch)r.catch(()=>{})}catch(e){}
@@ -688,61 +610,86 @@ function enterFull(){
 function exitFull(){
   try{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(()=>{});else if(document.webkitFullscreenElement&&document.webkitExitFullscreen)document.webkitExitFullscreen()}catch(e){}
 }
-function closeMushaf(){
-  exitFull();
-  const v=$("quranView");v.classList.remove("closing","dragging");v.style.transform="";v.style.opacity="";
-  qOpen=null;renderQuran();window.scrollTo({top:0});setHeadH();
-}
+function closeMushaf(){exitFull();qOpen=null;renderQuran();window.scrollTo({top:0});setHeadH()}
 
-/* touch: tap = show/hide buttons, long-press an ayah = mark it, pull down = back to the list */
+/* touch: drag sideways = turn page, pull down = back to list, tap = show/hide buttons */
 let lastTouch=0;
-function bindPagerGestures(pager){
-  const v=$("quranView");
-  let sx=0,sy=0,t0=0,mode=null,lp=null,lpDone=false,dy=0,page=null;
-  pager.addEventListener("contextmenu",e=>e.preventDefault());
-  pager.addEventListener("touchstart",e=>{
+function bindViewer(vw){
+  const v=$("quranView"),tr=$("track");
+  let sx=0,sy=0,t0=0,mode=null,dx=0,dy=0,W=1,slide=null;
+  vw.addEventListener("contextmenu",e=>e.preventDefault());
+  vw.addEventListener("touchstart",e=>{
     lastTouch=Date.now();
-    if(e.touches.length!==1){mode="multi";clearTimeout(lp);return}
-    const t=e.touches[0];sx=t.clientX;sy=t.clientY;t0=Date.now();mode=null;lpDone=false;dy=0;
-    page=e.target.closest(".mpage");
-    const w=e.target.closest(".w");
-    clearTimeout(lp);
-    if(w)lp=setTimeout(()=>{if(mode==null){lpDone=true;toggleMark(w)}},480);
+    if(e.touches.length!==1){mode="multi";return}
+    const t=e.touches[0];sx=t.clientX;sy=t.clientY;t0=Date.now();mode=null;dx=dy=0;W=vw.clientWidth||1;
+    slide=tr.children[qOpen];
   },{passive:true});
-  pager.addEventListener("touchmove",e=>{
+  vw.addEventListener("touchmove",e=>{
     if(mode==="multi"||e.touches.length!==1)return;
-    const t=e.touches[0],dx=t.clientX-sx;dy=t.clientY-sy;
+    const t=e.touches[0];dx=t.clientX-sx;dy=t.clientY-sy;
     if(mode==null&&(Math.abs(dx)>8||Math.abs(dy)>8)){
-      clearTimeout(lp);
-      const atTop=!page||page.scrollTop<=0;
-      mode=(dy>0&&Math.abs(dy)>Math.abs(dx)*1.3&&atTop)?"down":"other";
+      if(Math.abs(dx)>Math.abs(dy))mode="h";
+      else if(dy>0&&(!slide||slide.scrollTop<=0))mode="down";
+      else mode="v";
+      if(mode==="h")tr.classList.remove("anim");
       if(mode==="down")v.classList.add("dragging");
     }
-    if(mode==="down"){
+    if(mode==="h"){
+      if(e.cancelable)e.preventDefault();
+      let d=dx;if((qOpen===0&&d<0)||(qOpen===NP-1&&d>0))d*=0.3;   /* resist past the first/last page */
+      tr.style.transform=`translateX(calc(${qOpen*100}% + ${d.toFixed(0)}px))`;
+    }else if(mode==="down"){
       if(e.cancelable)e.preventDefault();
       const d=Math.max(0,dy);
       v.style.transform=`translateY(${(d*0.55).toFixed(0)}px)`;v.style.opacity=String(Math.max(.35,1-d/600));
     }
   },{passive:false});
-  pager.addEventListener("touchend",()=>{
-    lastTouch=Date.now();clearTimeout(lp);
-    if(mode==="down"){
+  vw.addEventListener("touchend",()=>{
+    lastTouch=Date.now();
+    const dt=Math.max(1,Date.now()-t0);
+    if(mode==="h"){
+      const fast=Math.abs(dx)/dt>0.45&&Math.abs(dx)>30;
+      /* finger moving right brings the next page (Arabic order) */
+      if(dx>W*0.18||(fast&&dx>0))goPage(qOpen+1,true);
+      else if(dx<-W*0.18||(fast&&dx<0))goPage(qOpen-1,true);
+      else goPage(qOpen,true);
+    }else if(mode==="down"){
       v.classList.remove("dragging");
       if(dy>110){v.classList.add("closing");setTimeout(navBack,170)}
       else{v.style.transform="";v.style.opacity=""}
-    }else if(mode==null&&!lpDone&&Date.now()-t0<400){toggleChrome()}
+    }else if(mode==null&&dt<400){toggleChrome()}
     mode=null;
   });
-  pager.addEventListener("touchcancel",()=>{clearTimeout(lp);mode=null;v.classList.remove("dragging");v.style.transform="";v.style.opacity=""});
+  vw.addEventListener("touchcancel",()=>{if(mode==="h")goPage(qOpen,true);mode=null;v.classList.remove("dragging");v.style.transform="";v.style.opacity=""});
 }
-document.addEventListener("fullscreenchange",()=>{if(qOpen!=null)setTimeout(()=>{const i=qOpen;refitAll();goPage(i,false)},120)});
 
+$("quranView").addEventListener("click",e=>{
+  const pBtn=e.target.closest("[data-page]");
+  if(pBtn){openPage(+pBtn.dataset.page);return}
+  const q=e.target.closest("[data-q]");
+  if(q){
+    const a=q.dataset.q;
+    if(a==="list"){navBack();return}
+    if(a==="theme"){
+      mDark=!mDark;ls.set("athkar.mushafDark",mDark);$("quranView").classList.toggle("m-dark",mDark);q.innerHTML=mDark?SUN:MOON;
+      document.querySelectorAll("#track img[src]").forEach(img=>img.removeAttribute("src"));loadNear(qOpen);showChrome(true);return;
+    }
+    if(a==="mark"){
+      const p=FIRST+qOpen;qMark=qMark===p?null:p;ls.set("athkar.quranBookmark",qMark);
+      q.innerHTML=BOOK(qMark===p);q.classList.toggle("on",qMark===p);
+      try{navigator.vibrate&&navigator.vibrate(qMark?[15,40,15]:10)}catch(err){}
+      showChrome(true);return;
+    }
+    if(a==="prev"){goPage(qOpen-1,true);showChrome(true);return}
+    if(a==="next"){goPage(qOpen+1,true);showChrome(true);return}
+  }
+  if(qOpen!=null&&e.target.closest(".viewer")&&Date.now()-lastTouch>900)toggleChrome();   /* mouse */
+});
 document.addEventListener("keydown",e=>{
   if(active!=="quran"||qOpen==null||!scrim.hidden)return;
-  if(e.key==="ArrowLeft"){goPage(curIndex()+1,true)}else if(e.key==="ArrowRight"){goPage(curIndex()-1,true)}else if(e.key==="Escape"){navBack()}
+  if(e.key==="ArrowLeft")goPage(qOpen+1,true);else if(e.key==="ArrowRight")goPage(qOpen-1,true);else if(e.key==="Escape")navBack();
 });
-let resizeT=null;
-window.addEventListener("resize",()=>{clearTimeout(resizeT);resizeT=setTimeout(()=>{setHeadH();if(qOpen!=null){const i=qOpen;refitAll();goPage(i,false)}},150)});
+window.addEventListener("resize",()=>setHeadH());
 
 /* ---------- swipe between athkar pages ---------- */
 const TAB_ORDER=[...PAGES.map(p=>p.key),"quran"];
@@ -763,7 +710,6 @@ function addSwipe(el){
   el.addEventListener("touchend",e=>{
     if(!on)return;on=false;
     const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
-    /* finger moving right shows the next page (Arabic order), left goes back */
     if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.8&&Date.now()-st<800)swipeTabs(dx>0?1:-1);
   },{passive:true});
 }

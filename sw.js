@@ -1,10 +1,9 @@
 /* Offline support: app files are fetched fresh when online and served from cache when offline. */
-const CACHE = "athkar-v3";
+const CACHE = "athkar-v4";
 const SHELL = [
   "./", "./index.html", "./manifest.webmanifest",
-  "./data/athkar-default.js", "./data/mushaf-juz30.js",
-  "./fonts/qpc2/bsml.ttf", "./fonts/surahs.ttf",
-  ...Array.from({ length: 23 }, (_, i) => `./fonts/qpc2/p${582 + i}.woff2`),
+  "./data/athkar-default.js", "./data/mushaf-meta.js",
+  ...Array.from({ length: 23 }, (_, i) => `./mushaf/paper/${582 + i}.webp`),
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png", "./icons/favicon.png"
 ];
 
